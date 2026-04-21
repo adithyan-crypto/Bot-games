@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AI Dungeon Grid Game</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div id="app">
+
+    <!-- Game Over overlay -->
+    <div id="game-over-overlay" class="hidden">
+      <div id="game-over-box">
+        <h2>GAME OVER</h2>
+        <p>You have fallen in the dungeon.</p>
+        <button id="btn-restart-overlay">↺ Restart</button>
+      </div>
+    </div>
+
+    <!-- Win overlay -->
+    <div id="win-overlay" class="hidden">
+      <div id="win-box">
+        <h2>🏆 VICTORY</h2>
+        <p>You defeated the Dungeon Lord and conquered the dungeon!</p>
+        <button id="btn-restart-win">↺ Play Again</button>
+      </div>
+    </div>
+
+    <header id="header">
+      <h1>AI Dungeon</h1>
+    </header>
+
+    <main id="main">
+      <!-- Grid -->
+      <section id="grid-section">
+        <div id="grid-container"></div>
+      </section>
+
+      <!-- Player stats sidebar -->
+      <aside id="stats-panel">
+        <h2>Player</h2>
+        <div class="stat-row"><span class="stat-label">HP</span><span class="stat-value" id="stat-hp">—</span></div>
+        <div class="stat-row"><span class="stat-label">Attack</span><span class="stat-value" id="stat-attack">—</span></div>
+        <div class="stat-row"><span class="stat-label">Position</span><span class="stat-value" id="stat-position">—</span></div>
+        <div class="stat-row"><span class="stat-label">Rooms</span><span class="stat-value" id="stat-rooms">—</span></div>
+        <hr />
+        <h2>Inventory</h2>
+        <div class="stat-row"><span class="stat-label">Items</span><span class="stat-value" id="stat-inv-count">0</span></div>
+        <ul id="inventory-list"><li class="empty">Empty</li></ul>
+      </aside>
+
+      <!-- Help panel (right of stats sidebar) -->
+      <aside id="help-panel">
+        <button id="btn-help" class="btn-help-toggle">? Help</button>
+        <div id="help-body" class="hidden">
+          <p class="help-heading">Movement</p>
+          <p class="help-line">Arrow keys ↑ ↓ ← → to move</p>
+          <p class="help-heading">Room types</p>
+          <p class="help-line">👾 Enemy — click ⚔ Attack</p>
+          <p class="help-line">💰 Loot — click 💰 Collect</p>
+          <p class="help-line">🧝 NPC — click 💬 Talk</p>
+          <p class="help-line">🪤 Trap — auto-damages on entry</p>
+          <p class="help-line">💀 Boss — tile (9,9), defeat to win</p>
+          <p class="help-heading">Items</p>
+          <p class="help-line">Health Potion → +10 HP</p>
+          <p class="help-line">Iron Sword → +2 ATK</p>
+          <p class="help-line">Magic Scroll → +5 HP +1 ATK</p>
+          <p class="help-line">Shield Fragment → +5 max HP</p>
+          <p class="help-heading">Goal</p>
+          <p class="help-line">Reach (9,9) and defeat the Dungeon Lord to win!</p>
+        </div>
+      </aside>
+
+    </main>
+
+    <!-- Current room details + actions -->
+    <div id="bottom-area">
+
+      <!-- Room panel -->
+      <section id="room-panel">
+        <h2>Room</h2>
+        <div class="stat-row"><span class="stat-label">Coords</span><span class="stat-value" id="room-coords">—</span></div>
+        <div class="stat-row"><span class="stat-label">Type</span><span class="stat-value" id="room-type">—</span></div>
+        <div class="stat-row"><span class="stat-label">Status</span><span class="stat-value" id="room-status">—</span></div>
+        <p id="room-description" class="room-desc"></p>
+
+        <!-- Enemy sub-panel -->
+        <div id="enemy-info" class="sub-panel hidden">
+          <h3 class="sub-title enemy-title">Enemy</h3>
+          <div class="stat-row"><span class="stat-label">Name</span><span class="stat-value" id="enemy-name">—</span></div>
+          <div class="stat-row"><span class="stat-label">HP</span><span class="stat-value" id="enemy-hp">—</span></div>
+          <div class="stat-row"><span class="stat-label">Attack</span><span class="stat-value" id="enemy-attack">—</span></div>
+        </div>
+
+        <!-- NPC sub-panel -->
+        <div id="npc-info" class="sub-panel hidden">
+          <h3 class="sub-title npc-title">NPC</h3>
+          <div class="stat-row"><span class="stat-label">Name</span><span class="stat-value" id="npc-name">—</span></div>
+          <p id="npc-dialogue" class="npc-dialogue"></p>
+        </div>
+
+        <!-- Loot sub-panel -->
+        <div id="loot-info" class="sub-panel hidden">
+          <h3 class="sub-title loot-title">Loot</h3>
+          <div class="stat-row"><span class="stat-label">Item</span><span class="stat-value" id="loot-item-name">—</span></div>
+        </div>
+      </section>
+
+      <!-- Action panel -->
+      <section id="action-panel">
+        <h2>Actions</h2>
+        <button id="btn-attack"  class="btn btn-danger  hidden">⚔ Attack</button>
+        <button id="btn-collect" class="btn btn-loot    hidden">💰 Collect</button>
+        <button id="btn-talk"    class="btn btn-npc     hidden">💬 Talk</button>
+        <button id="btn-restart" class="btn btn-neutral">↺ Restart</button>
+      </section>
+
+      <!-- Message log -->
+      <section id="log-panel">
+        <h2>Log</h2>
+        <ul id="log-list"></ul>
+      </section>
+
+    </div><!-- /bottom-area -->
+  </div><!-- /app -->
+
+  <script src="src/GameState.js"></script>
+  <script src="src/GridSystem.js"></script>
+  <script src="src/RoomGenerator.js"></script>
+  <script src="src/Combat.js"></script>
+  <script src="src/UI.js"></script>
+  <script src="src/Player.js"></script>
+  <script src="main.js"></script>
+</body>
+</html>
