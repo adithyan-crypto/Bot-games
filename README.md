@@ -1,5 +1,7 @@
 # AI Dungeon Grid Game
 
+![AI Dungeon Grid Game](dungon.png)
+
 A browser-based dungeon exploration game built with **vanilla HTML, CSS, and JavaScript** — no frameworks, no install, no server required.
 
 Explore a 10×10 grid, fight enemies, collect loot, talk to NPCs, survive traps, and defeat the **Dungeon Lord** to win.
