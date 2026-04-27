@@ -118,10 +118,21 @@ Dungeon_Grid_Game/
 │   ├── Combat.js         # Turn-based fight logic
 │   ├── Player.js         # Movement, trap triggers, game-over guard
 │   └── UI.js             # All rendering (grid, stats, panels, log)
-└── spec.md               # Game design specification
+└── docs/
+    ├── spec.md           # Game design specification
+    ├── GAMEPLAY.md       # Detailed gameplay guide
+    ├── DEVELOPMENT.md    # Development phases and guidelines
+    └── ARCHITECTURE.md   # Code structure and components
 ```
 
 ---
+
+## 📚 Documentation
+
+- [Game Design Spec](docs/spec.md)
+- [Gameplay Guide](docs/GAMEPLAY.md)
+- [Development Guide](docs/DEVELOPMENT.md)
+- [Architecture Overview](docs/ARCHITECTURE.md)
 
 ## 🛠 Tech Stack
 

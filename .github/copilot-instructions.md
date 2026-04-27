@@ -139,7 +139,7 @@ A playable dungeon game with:
 ## 💡 Copilot Prompt Pattern
 
 Use:
-"Follow spec.md and instruction.md. Implement [feature]. Modify only necessary files."
+"Follow docs/spec.md and instruction.md. Implement [feature]. Modify only necessary files."
 
 ---
 
